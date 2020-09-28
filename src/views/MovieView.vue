@@ -1,26 +1,29 @@
 <template>
   <div class="movie-view">
-    <h1>This is the movie view</h1>
+    <h1>{{ movie.Title }}</h1>
+    <img v-bind:src="movie.Poster" alt="{{movie.Title}}"/>
+    <p>{{ movie.Year }}, {{ movie.Production }}</p>
   </div>
 </template>
 
 <script lang="ts">
-import Vue, { PropOptions } from 'vue';
+import Vue from 'vue';
 import MovieService from '@/services/MovieService';
-import { Movie } from '@/services/types';
+import { MovieDetail } from '@/services/types';
 
 export default Vue.extend({
   name: 'MovieView',
+  props: ['movieId'],
   data() {
     return {
-      movie: {
-        type: Object,
-      } as PropOptions<Movie>,
+      movie: {} as MovieDetail,
     };
   },
   async created() {
-    console.log(this.movie.imdbID);
-    MovieService.movieService.getSpecificMovie(/* TODO */ '273b9080', /* TODO */ 'tt0372784');
+    const { apiToken } = this.$store.state.user;
+    const movieID = this.movieId;
+
+    this.movie = await MovieService.movieService.getSpecificMovie(apiToken, movieID);
   },
 });
 </script>
