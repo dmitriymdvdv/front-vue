@@ -1,7 +1,7 @@
 <template>
   <div class="movie-view">
     <h1>{{ movie.Title }}</h1>
-    <img v-bind:src="movie.Poster" alt="{{movie.Title}}"/>
+    <img v-bind:src="movie.Poster" v-bind:alt="movie.Title"/>
     <p>{{ movie.Year }}, {{ movie.Production }}</p>
   </div>
 </template>
